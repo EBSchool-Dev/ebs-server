@@ -1,0 +1,60 @@
+services:
+  api:
+    env_file:
+      - ../.env
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.dev
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=development
+      - PORT=${APP_PORT:-3000}
+      - DATABASE_URL=postgresql://ebsn:${POSTGRES_PASSWORD}@postgres:5432/ebsn
+      - DATABASE_READ_URL=postgresql://ebsn:${POSTGRES_PASSWORD}@postgres:5432/ebsn
+      - REDIS_URL=redis://:${REDIS_PASSWORD}@redis:6379
+    ports:
+      - "${APP_PORT:-3000}:${APP_PORT:-3000}"
+    volumes:
+      - ../:/app
+      - /app/node_modules
+    command: npm run start:dev
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  postgres:
+    env_file:
+      - ../.env
+    image: postgres:18-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ebsn
+      POSTGRES_USER: ebsn
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ebsn"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    env_file:
+      - ../.env
+    image: redis:8-alpine
+    restart: unless-stopped
+    command: redis-server --appendonly yes --maxmemory 512mb --maxmemory-policy allkeys-lru --requirepass ${REDIS_PASSWORD}
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD}", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:
+  redisdata:

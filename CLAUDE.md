@@ -97,6 +97,52 @@ npx jest src/modules/auth/auth.service.spec.ts
 - **No enums.** Use `as const` objects with type inference, or Prisma-generated enums only.
 - **Prefer `interface` over `type`** for object shapes. Use `type` for unions, intersections, and mapped types.
 
+### Import Rules
+- **Absolute imports everywhere in `src/`.** Use the `@/` path alias for all imports. Never use relative imports (`../`, `./`) in source code.
+- **Relative imports in tests only.** Test files (`*.spec.ts`, `*.e2e-spec.ts`) use relative imports because Jest resolves modules differently and `moduleNameMapper` can be fragile.
+- **Configured in `tsconfig.json`:**
+
+```json
+{
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  }
+}
+```
+
+- **Examples:**
+
+```typescript
+// ✅ CORRECT — source code (absolute)
+import { PrismaService } from '@/prisma/prisma.service';
+import { Roles } from '@/common/decorators/roles.decorator';
+import { CreateCourseDto } from '@/modules/courses/schemas/create-course.schema';
+import { CircuitBreaker } from '@/common/resilience/circuit-breaker';
+
+// ❌ WRONG — source code (relative)
+import { PrismaService } from '../../prisma/prisma.service';
+import { Roles } from '../../../common/decorators/roles.decorator';
+
+// ✅ CORRECT — test files (relative)
+// tests/modules/courses/courses.service.spec.ts
+import { CoursesService } from './courses.service';
+import { CreateCourseDto } from './schemas/create-course.schema';
+```
+
+- **NestJS CLI must also be configured** in `nest-cli.json` to support the alias:
+
+```json
+{
+  "compilerOptions": {
+    "tsConfigPath": "tsconfig.build.json"
+  }
+}
+```
+
+- **`tsconfig.build.json`** must include the same `paths` as `tsconfig.json`. NestJS uses `tsc-alias` or SWC with path resolution to rewrite aliases at build time. Ensure the build output resolves correctly by adding `tsc-alias` as a post-build step or using the `@swc/cli` path rewriting plugin.
+
 ### NestJS / Fastify Rules
 > 📖 Fastify adapter docs: https://docs.nestjs.com/techniques/performance
 > 📖 NestJS v11 migration: https://docs.nestjs.com/migration-guide
@@ -648,6 +694,18 @@ Health: `/health` (liveness) + `/health/ready` (readiness with circuit state).
 
 Real PostgreSQL 18 + Redis 8 via Testcontainers. Never mock the database.
 
+### Jest Path Alias Configuration
+
+Tests use relative imports, but Jest still needs to resolve the `@/` alias when source files use it internally. Add to `jest` config in `package.json` or `jest.config.ts`:
+
+```json
+{
+  "moduleNameMapper": {
+    "^@/(.*)$": "<rootDir>/src/$1"
+  }
+}
+```
+
 ---
 
 ## Implementation Order
@@ -729,5 +787,7 @@ Real PostgreSQL 18 + Redis 8 via Testcontainers. Never mock the database.
 - [ ] Timestamps are UTC (no timezone conversion)
 - [ ] Soft delete used (never hard delete unless NDPA erasure)
 - [ ] New env vars added to `env.schema.ts` AND `.env.example`
+- [ ] All imports in `src/` use `@/` alias (no relative imports like `../`)
+- [ ] All imports in test files use relative imports (no `@/` alias)
 - [ ] Tests pass with real PostgreSQL 18 + Redis 8 (Testcontainers)
 - [ ] Fetched latest docs for any library used (links above)
