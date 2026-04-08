@@ -3,9 +3,8 @@ import { ConfigService } from "@nestjs/config";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { Pool } from "pg";
 
+import type { EnvironmentVariables } from "@/common/config";
 import { PrismaClient } from "@/prisma/client";
-
-import type { EnvironmentVariables } from "../common/config/env.schema";
 
 @Injectable()
 export class PrismaService implements OnModuleInit, OnModuleDestroy {

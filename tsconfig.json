@@ -24,7 +24,8 @@
     "paths": {
       "@/prisma/*": ["prisma/generated/prisma/*"],
       "@/types/*": ["src/types/*"],
-      "@/common/*": ["src/common/*"]
+      "@/common/*": ["src/common/*"],
+      "@/db/*": ["src/database/*"]
     }
   }
 }

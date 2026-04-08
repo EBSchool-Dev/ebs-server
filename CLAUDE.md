@@ -16,40 +16,40 @@ The system serves a three-tier learning hierarchy: **Course → Module → Lesso
 
 ## Tech Stack (Exact Versions)
 
-| Layer | Technology | Version / Notes | Docs |
-|---|---|---|---|
-| Runtime | Node.js | 24 LTS (Debian bookworm-slim in Docker) | https://nodejs.org/docs/latest-v24.x/api/ |
-| Framework | NestJS | v11+ (latest stable) | https://docs.nestjs.com/ |
-| HTTP Adapter | **Fastify** (NOT Express) | `@nestjs/platform-fastify` | https://docs.nestjs.com/techniques/performance |
-| Language | TypeScript | Strict mode, zero `any` | https://www.typescriptlang.org/docs/ |
-| ORM | Prisma | Latest stable | https://www.prisma.io/docs |
-| Database | **PostgreSQL 18** | Docker image: `postgres:18-alpine` | https://www.postgresql.org/docs/18/ |
-| Cache / Queue Broker | Redis 8 | Docker image: `redis:8-alpine` | https://redis.io/docs/latest/ |
-| Validation | **Zod** (NOT Joi, NOT class-validator) | `zod` + `nestjs-zod` v5+ | https://zod.dev/ |
-| NestJS + Zod Integration | nestjs-zod v5+ | `createZodDto`, `ZodValidationPipe` | https://github.com/BenLorantfy/nestjs-zod |
-| Auth: Hashing | Argon2id | `argon2` (NOT bcrypt) | https://github.com/ranisalt/node-argon2 |
-| Auth: JWT | @nestjs/jwt | Passport strategies | https://docs.nestjs.com/security/authentication |
-| Auth: OAuth | passport-google-oauth20 | Google OAuth 2.0 | https://docs.nestjs.com/recipes/passport |
-| Job Queues | BullMQ | `@nestjs/bullmq` | https://docs.nestjs.com/techniques/queues |
-| Email | Resend + React Email | `resend` + `@react-email/components` | https://resend.com/docs / https://react.email/docs/introduction |
-| Image/File Storage | Cloudinary | Signed uploads for client, SDK for server | https://cloudinary.com/documentation |
-| Video | Bunny.net Stream | Video only; all other media via Cloudinary | https://docs.bunny.net/docs/stream-api-overview |
-| Payments | Paystack | Nigerian market standard | https://paystack.com/docs/api/ |
-| Logging | Pino | Fastify built-in (NOT Winston, NOT Morgan) | https://docs.nestjs.com/techniques/logger |
-| Error Tracking | Sentry | `@sentry/nestjs` | https://docs.sentry.io/platforms/javascript/guides/nestjs/ |
-| Metrics | Prometheus | `prom-client` | https://github.com/siimon/prom-client |
-| ID Generation | CUID2 | `@paralleldrive/cuid2` (NOT UUID) | https://github.com/paralleldrive/cuid2 |
-| Rate Limiting | @nestjs/throttler | Redis store | https://docs.nestjs.com/security/rate-limiting |
-| Deployment | Coolify (self-hosted PaaS) | On Digital Ocean Droplet | https://coolify.io/docs |
-| Reverse Proxy | Traefik | Managed by Coolify (NOT Caddy, NOT Nginx) | https://doc.traefik.io/traefik/ |
-| Swagger / OpenAPI | @nestjs/swagger | Auto-gen from Zod schemas via nestjs-zod | https://docs.nestjs.com/openapi/introduction |
-| CSRF | @fastify/csrf-protection | Double-submit cookie | https://github.com/fastify/csrf-protection |
-| Security Headers | @fastify/helmet | CSP, HSTS, X-Frame | https://github.com/fastify/fastify-helmet |
-| CORS | @fastify/cors | Fastify-native | https://github.com/fastify/fastify-cors |
-| Cookies | @fastify/cookie | Refresh tokens + CSRF | https://github.com/fastify/fastify-cookie |
-| Testing | Jest + Testcontainers | Real DB in tests | https://docs.nestjs.com/fundamentals/testing / https://testcontainers.com/guides/getting-started-with-testcontainers-for-nodejs/ |
-| XSS Sanitisation | DOMPurify + jsdom | Server-side HTML sanitisation | https://github.com/cure53/DOMPurify |
-| Events | eventemitter2 | Domain event bus | https://github.com/EventEmitter2/EventEmitter2 |
+| Layer                    | Technology                             | Version / Notes                            | Docs                                                                                                                             |
+| ------------------------ | -------------------------------------- | ------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------- |
+| Runtime                  | Node.js                                | 24 LTS (Debian bookworm-slim in Docker)    | https://nodejs.org/docs/latest-v24.x/api/                                                                                        |
+| Framework                | NestJS                                 | v11+ (latest stable)                       | https://docs.nestjs.com/                                                                                                         |
+| HTTP Adapter             | **Fastify** (NOT Express)              | `@nestjs/platform-fastify`                 | https://docs.nestjs.com/techniques/performance                                                                                   |
+| Language                 | TypeScript                             | Strict mode, zero `any`                    | https://www.typescriptlang.org/docs/                                                                                             |
+| ORM                      | Prisma                                 | Latest stable                              | https://www.prisma.io/docs                                                                                                       |
+| Database                 | **PostgreSQL 18**                      | Docker image: `postgres:18-alpine`         | https://www.postgresql.org/docs/18/                                                                                              |
+| Cache / Queue Broker     | Redis 8                                | Docker image: `redis:8-alpine`             | https://redis.io/docs/latest/                                                                                                    |
+| Validation               | **Zod** (NOT Joi, NOT class-validator) | `zod` + `nestjs-zod` v5+                   | https://zod.dev/                                                                                                                 |
+| NestJS + Zod Integration | nestjs-zod v5+                         | `createZodDto`, `ZodValidationPipe`        | https://github.com/BenLorantfy/nestjs-zod                                                                                        |
+| Auth: Hashing            | Argon2id                               | `argon2` (NOT bcrypt)                      | https://github.com/ranisalt/node-argon2                                                                                          |
+| Auth: JWT                | @nestjs/jwt                            | Passport strategies                        | https://docs.nestjs.com/security/authentication                                                                                  |
+| Auth: OAuth              | passport-google-oauth20                | Google OAuth 2.0                           | https://docs.nestjs.com/recipes/passport                                                                                         |
+| Job Queues               | BullMQ                                 | `@nestjs/bullmq`                           | https://docs.nestjs.com/techniques/queues                                                                                        |
+| Email                    | Resend + React Email                   | `resend` + `@react-email/components`       | https://resend.com/docs / https://react.email/docs/introduction                                                                  |
+| Image/File Storage       | Cloudinary                             | Signed uploads for client, SDK for server  | https://cloudinary.com/documentation                                                                                             |
+| Video                    | Bunny.net Stream                       | Video only; all other media via Cloudinary | https://docs.bunny.net/docs/stream-api-overview                                                                                  |
+| Payments                 | Paystack                               | Nigerian market standard                   | https://paystack.com/docs/api/                                                                                                   |
+| Logging                  | Pino                                   | Fastify built-in (NOT Winston, NOT Morgan) | https://docs.nestjs.com/techniques/logger                                                                                        |
+| Error Tracking           | Sentry                                 | `@sentry/nestjs`                           | https://docs.sentry.io/platforms/javascript/guides/nestjs/                                                                       |
+| Metrics                  | Prometheus                             | `prom-client`                              | https://github.com/siimon/prom-client                                                                                            |
+| ID Generation            | CUID2                                  | `@paralleldrive/cuid2` (NOT UUID)          | https://github.com/paralleldrive/cuid2                                                                                           |
+| Rate Limiting            | @nestjs/throttler                      | Redis store                                | https://docs.nestjs.com/security/rate-limiting                                                                                   |
+| Deployment               | Coolify (self-hosted PaaS)             | On Digital Ocean Droplet                   | https://coolify.io/docs                                                                                                          |
+| Reverse Proxy            | Traefik                                | Managed by Coolify (NOT Caddy, NOT Nginx)  | https://doc.traefik.io/traefik/                                                                                                  |
+| Swagger / OpenAPI        | @nestjs/swagger                        | Auto-gen from Zod schemas via nestjs-zod   | https://docs.nestjs.com/openapi/introduction                                                                                     |
+| CSRF                     | @fastify/csrf-protection               | Double-submit cookie                       | https://github.com/fastify/csrf-protection                                                                                       |
+| Security Headers         | @fastify/helmet                        | CSP, HSTS, X-Frame                         | https://github.com/fastify/fastify-helmet                                                                                        |
+| CORS                     | @fastify/cors                          | Fastify-native                             | https://github.com/fastify/fastify-cors                                                                                          |
+| Cookies                  | @fastify/cookie                        | Refresh tokens + CSRF                      | https://github.com/fastify/fastify-cookie                                                                                        |
+| Testing                  | Jest + Testcontainers                  | Real DB in tests                           | https://docs.nestjs.com/fundamentals/testing / https://testcontainers.com/guides/getting-started-with-testcontainers-for-nodejs/ |
+| XSS Sanitisation         | DOMPurify + jsdom                      | Server-side HTML sanitisation              | https://github.com/cure53/DOMPurify                                                                                              |
+| Events                   | eventemitter2                          | Domain event bus                           | https://github.com/EventEmitter2/EventEmitter2                                                                                   |
 
 ---
 
@@ -91,6 +91,7 @@ npx jest src/modules/auth/auth.service.spec.ts
 ## Critical Rules — READ BEFORE WRITING ANY CODE
 
 ### TypeScript Rules
+
 - **Strict mode is mandatory.** `strict: true` in tsconfig.json. No exceptions.
 - **Zero `any` types.** Use `unknown` and narrow, or define proper types/interfaces.
 - **No `as` type assertions** unless absolutely necessary and commented with justification.
@@ -98,6 +99,7 @@ npx jest src/modules/auth/auth.service.spec.ts
 - **Prefer `interface` over `type`** for object shapes. Use `type` for unions, intersections, and mapped types.
 
 ### Import Rules
+
 - **Absolute imports everywhere in `src/`.** Use the `@/` path alias for all imports. Never use relative imports (`../`, `./`) in source code.
 - **Relative imports in tests only.** Test files (`*.spec.ts`, `*.e2e-spec.ts`) use relative imports because Jest resolves modules differently and `moduleNameMapper` can be fragile.
 - **Configured in `tsconfig.json`:**
@@ -116,19 +118,19 @@ npx jest src/modules/auth/auth.service.spec.ts
 
 ```typescript
 // ✅ CORRECT — source code (absolute)
-import { PrismaService } from '@/prisma/prisma.service';
-import { Roles } from '@/common/decorators/roles.decorator';
-import { CreateCourseDto } from '@/modules/courses/schemas/create-course.schema';
-import { CircuitBreaker } from '@/common/resilience/circuit-breaker';
+import { PrismaService } from "@/prisma/prisma.service";
+import { Roles } from "@/common/decorators/roles.decorator";
+import { CreateCourseDto } from "@/modules/courses/schemas/create-course.schema";
+import { CircuitBreaker } from "@/common/resilience/circuit-breaker";
 
 // ❌ WRONG — source code (relative)
-import { PrismaService } from '../../prisma/prisma.service';
-import { Roles } from '../../../common/decorators/roles.decorator';
+import { PrismaService } from "../../prisma/prisma.service";
+import { Roles } from "../../../common/decorators/roles.decorator";
 
 // ✅ CORRECT — test files (relative)
 // tests/modules/courses/courses.service.spec.ts
-import { CoursesService } from './courses.service';
-import { CreateCourseDto } from './schemas/create-course.schema';
+import { CoursesService } from "./courses.service";
+import { CreateCourseDto } from "./schemas/create-course.schema";
 ```
 
 - **NestJS CLI must also be configured** in `nest-cli.json` to support the alias:
@@ -144,6 +146,7 @@ import { CreateCourseDto } from './schemas/create-course.schema';
 - **`tsconfig.build.json`** must include the same `paths` as `tsconfig.json`. NestJS uses `tsc-alias` or SWC with path resolution to rewrite aliases at build time. Ensure the build output resolves correctly by adding `tsc-alias` as a post-build step or using the `@swc/cli` path rewriting plugin.
 
 ### NestJS / Fastify Rules
+
 > 📖 Fastify adapter docs: https://docs.nestjs.com/techniques/performance
 > 📖 NestJS v11 migration: https://docs.nestjs.com/migration-guide
 > 📖 Fastify v5 migration: https://fastify.dev/docs/latest/Guides/Migration-Guide-V5/
@@ -156,6 +159,7 @@ import { CreateCourseDto } from './schemas/create-course.schema';
 - **Register `app.enableShutdownHooks()`** in main.ts. Required for graceful shutdown lifecycle hooks.
 
 ### Docker Rules
+
 > 📖 Node.js Docker best practices: https://snyk.io/blog/10-best-practices-to-containerize-nodejs-web-applications-with-docker/
 > 📖 Choosing Node.js Docker image: https://snyk.io/blog/choosing-the-best-node-js-docker-image/
 
@@ -168,6 +172,7 @@ import { CreateCourseDto } from './schemas/create-course.schema';
 - **Always include `.dockerignore`.** Prevents `node_modules`, `.git`, `.env` files, and test dirs from entering the build context.
 
 ### Validation Rules
+
 > 📖 nestjs-zod v5 setup & API: https://github.com/BenLorantfy/nestjs-zod
 > 📖 Zod docs: https://zod.dev/
 
@@ -178,6 +183,7 @@ import { CreateCourseDto } from './schemas/create-course.schema';
 - **nestjs-zod v5 setup requires:** `ZodValidationPipe` as global pipe, `ZodSerializerInterceptor` as global interceptor. See: https://github.com/BenLorantfy/nestjs-zod#setup
 
 ### Database Rules
+
 > 📖 Prisma docs: https://www.prisma.io/docs
 > 📖 Prisma with NestJS: https://docs.nestjs.com/recipes/prisma
 > 📖 PostgreSQL 18 docs: https://www.postgresql.org/docs/18/
@@ -189,6 +195,7 @@ import { CreateCourseDto } from './schemas/create-course.schema';
 - **Audit columns on all entities:** `createdAt`, `updatedAt`, `createdBy`, `updatedBy`.
 
 ### Auth Rules
+
 > 📖 NestJS auth guide: https://docs.nestjs.com/security/authentication
 > 📖 Argon2 node: https://github.com/ranisalt/node-argon2
 > 📖 NestJS JWT: https://docs.nestjs.com/security/authentication#jwt-token
@@ -200,6 +207,7 @@ import { CreateCourseDto } from './schemas/create-course.schema';
 - **Token rotation:** Both tokens rotated atomically on refresh. Old refresh hash deleted.
 
 ### API Rules
+
 > 📖 NestJS controllers: https://docs.nestjs.com/controllers
 > 📖 NestJS OpenAPI: https://docs.nestjs.com/openapi/introduction
 
@@ -210,6 +218,7 @@ import { CreateCourseDto } from './schemas/create-course.schema';
 - **Response serialisation:** Use Fastify's `fast-json-stringify` with per-route response schemas. Only declared fields in responses.
 
 ### Security Rules
+
 > 📖 NestJS security overview: https://docs.nestjs.com/security/helmet
 > 📖 NestJS CORS: https://docs.nestjs.com/security/cors
 > 📖 NestJS CSRF: https://docs.nestjs.com/security/csrf-protection
@@ -264,7 +273,7 @@ ebsn-server/
 │   │   ├── search/                      # PostgreSQL full-text search
 │   │   ├── health/                      # liveness/readiness + circuit status
 │   │   └── reporting/                   # reports, CSV, audit log, bulk ops
-│   ├── prisma/                          # PrismaModule, PrismaService, tenant-scoping middleware
+│   ├── prisma/                          # DatabaseModule, PrismaService, tenant-scoping middleware
 │   ├── queue/                           # BullMQ module, processors, correlation
 │   └── cache/                           # Redis cache, stampede prevention, degradation
 ├── emails/                              # React Email templates (.tsx)
@@ -318,16 +327,18 @@ src/modules/{module-name}/
 > 📖 nestjs-zod createZodDto: https://github.com/BenLorantfy/nestjs-zod#createzoddto
 
 ```typescript
-import { z } from 'zod';
-import { createZodDto } from 'nestjs-zod';
+import { z } from "zod";
+import { createZodDto } from "nestjs-zod";
 
-export const createCourseSchema = z.object({
-  title: z.string().min(3).max(200),
-  description: z.string().min(10).max(5000),
-  price: z.number().min(0).default(0),
-  currency: z.string().length(3).default('NGN'),
-  bannerUrl: z.string().url().optional(),
-}).strict();
+export const createCourseSchema = z
+  .object({
+    title: z.string().min(3).max(200),
+    description: z.string().min(10).max(5000),
+    price: z.number().min(0).default(0),
+    currency: z.string().length(3).default("NGN"),
+    bannerUrl: z.string().url().optional(),
+  })
+  .strict();
 
 export type CreateCourseInput = z.infer<typeof createCourseSchema>;
 export class CreateCourseDto extends createZodDto(createCourseSchema) {}
@@ -339,7 +350,7 @@ export class CreateCourseDto extends createZodDto(createCourseSchema) {}
 > 📖 NestJS custom decorators: https://docs.nestjs.com/custom-decorators
 
 ```typescript
-@Controller('courses')
+@Controller("courses")
 export class CoursesController {
   constructor(private readonly coursesService: CoursesService) {}
 
@@ -397,8 +408,8 @@ User, Course (with price/currency), CourseOutline, OutlineModule, Module (ordere
 ```typescript
 @Injectable()
 export class PrismaService implements OnModuleInit, OnModuleDestroy {
-  public readonly primary: PrismaClient;  // DATABASE_URL — all writes
-  public readonly read: PrismaClient;     // DATABASE_READ_URL — read-only (defaults to DATABASE_URL)
+  public readonly primary: PrismaClient; // DATABASE_URL — all writes
+  public readonly read: PrismaClient; // DATABASE_READ_URL — read-only (defaults to DATABASE_URL)
 }
 ```
 
@@ -517,11 +528,11 @@ The ~75MB size difference (Alpine ~145MB vs slim ~220MB) is negligible on a VPS.
 
 ### Image Selection
 
-| Service | Image | Rationale |
-|---|---|---|
-| API / Worker | `node:24-bookworm-slim` | Official Node.js, glibc, slim footprint |
-| PostgreSQL | `postgres:18-alpine` | No native bindings concern, safe for Alpine |
-| Redis | `redis:8-alpine` | No native bindings concern, safe for Alpine |
+| Service      | Image                   | Rationale                                   |
+| ------------ | ----------------------- | ------------------------------------------- |
+| API / Worker | `node:24-bookworm-slim` | Official Node.js, glibc, slim footprint     |
+| PostgreSQL   | `postgres:18-alpine`    | No native bindings concern, safe for Alpine |
+| Redis        | `redis:8-alpine`        | No native bindings concern, safe for Alpine |
 
 ### Dockerfile (Production — Multi-Stage)
 
@@ -570,18 +581,18 @@ CMD ["dumb-init", "node", "dist/main.js"]
 
 ### Dockerfile Best Practices Applied
 
-| Practice | Implementation | Why |
-|---|---|---|
-| **Deterministic base image** | `node:24-bookworm-slim` (pin exact version in production) | Prevents non-deterministic builds from `latest` |
-| **Production deps only** | `npm ci --omit=dev` after build | Excludes devDependencies from final image |
-| **NODE_ENV=production** | `ENV NODE_ENV=production` baked into image | NestJS/Fastify optimise when this is set |
-| **Non-root user** | `USER node` + `COPY --chown=node:node` | Least privilege. Attacker can't escalate to root |
-| **dumb-init as PID 1** | `CMD ["dumb-init", "node", "dist/main.js"]` | Node.js as PID 1 ignores SIGTERM by default. dumb-init forwards signals properly for graceful shutdown |
-| **exec form CMD** | JSON array `["dumb-init", "node", ...]` not string | Prevents shell wrapping, ensures direct signal delivery |
-| **Layer caching** | `COPY package*.json` before `COPY .` | Dependencies layer cached unless package.json changes |
-| **Multi-stage build** | builder → production | Build tools and devDeps never reach production image |
-| **Minimal apt-get** | `--no-install-recommends` + `rm -rf /var/lib/apt/lists/*` | Keeps image slim after installing dumb-init |
-| **stop_grace_period: 35s** | In docker-compose.yml | Exceeds the 30s drain timeout, prevents SIGKILL during graceful shutdown |
+| Practice                     | Implementation                                            | Why                                                                                                    |
+| ---------------------------- | --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| **Deterministic base image** | `node:24-bookworm-slim` (pin exact version in production) | Prevents non-deterministic builds from `latest`                                                        |
+| **Production deps only**     | `npm ci --omit=dev` after build                           | Excludes devDependencies from final image                                                              |
+| **NODE_ENV=production**      | `ENV NODE_ENV=production` baked into image                | NestJS/Fastify optimise when this is set                                                               |
+| **Non-root user**            | `USER node` + `COPY --chown=node:node`                    | Least privilege. Attacker can't escalate to root                                                       |
+| **dumb-init as PID 1**       | `CMD ["dumb-init", "node", "dist/main.js"]`               | Node.js as PID 1 ignores SIGTERM by default. dumb-init forwards signals properly for graceful shutdown |
+| **exec form CMD**            | JSON array `["dumb-init", "node", ...]` not string        | Prevents shell wrapping, ensures direct signal delivery                                                |
+| **Layer caching**            | `COPY package*.json` before `COPY .`                      | Dependencies layer cached unless package.json changes                                                  |
+| **Multi-stage build**        | builder → production                                      | Build tools and devDeps never reach production image                                                   |
+| **Minimal apt-get**          | `--no-install-recommends` + `rm -rf /var/lib/apt/lists/*` | Keeps image slim after installing dumb-init                                                            |
+| **stop_grace_period: 35s**   | In docker-compose.yml                                     | Exceeds the 30s drain timeout, prevents SIGKILL during graceful shutdown                               |
 
 ### .dockerignore
 
@@ -727,51 +738,51 @@ Tests use relative imports, but Jest still needs to resolve the `@/` alias when 
 
 **Always fetch the latest docs before implementing.** These links should be checked for current API signatures:
 
-| Topic | URL |
-|---|---|
-| **NestJS v11 Docs** | https://docs.nestjs.com/ |
-| **NestJS v11 Migration** | https://docs.nestjs.com/migration-guide |
-| **Fastify v5 Docs** | https://fastify.dev/docs/latest/ |
-| **Fastify v5 Migration** | https://fastify.dev/docs/latest/Guides/Migration-Guide-V5/ |
-| **Prisma Docs** | https://www.prisma.io/docs |
-| **Prisma Client API** | https://www.prisma.io/docs/orm/reference/prisma-client-reference |
-| **Prisma Migrate** | https://www.prisma.io/docs/orm/prisma-migrate |
-| **Zod Docs** | https://zod.dev/ |
-| **nestjs-zod v5** | https://github.com/BenLorantfy/nestjs-zod |
-| **BullMQ** | https://docs.bullmq.io/ |
-| **NestJS Queues** | https://docs.nestjs.com/techniques/queues |
-| **Paystack API** | https://paystack.com/docs/api/ |
-| **Paystack Webhooks** | https://paystack.com/docs/payments/webhooks/ |
-| **Cloudinary Node SDK** | https://cloudinary.com/documentation/node_integration |
-| **Cloudinary Upload API** | https://cloudinary.com/documentation/image_upload_api_reference |
-| **Bunny.net Stream** | https://docs.bunny.net/docs/stream-api-overview |
-| **Resend Node SDK** | https://resend.com/docs/send-with-nodejs |
-| **React Email** | https://react.email/docs/introduction |
-| **Sentry NestJS** | https://docs.sentry.io/platforms/javascript/guides/nestjs/ |
-| **ioredis** | https://github.com/redis/ioredis |
-| **Coolify** | https://coolify.io/docs |
-| **Traefik** | https://doc.traefik.io/traefik/ |
-| **PostgreSQL 18** | https://www.postgresql.org/docs/18/ |
-| **Redis** | https://redis.io/docs/latest/ |
-| **Puppeteer** | https://pptr.dev/ |
-| **Argon2 (Node)** | https://github.com/ranisalt/node-argon2 |
-| **CUID2** | https://github.com/paralleldrive/cuid2 |
-| **DOMPurify** | https://github.com/cure53/DOMPurify |
-| **Testcontainers** | https://testcontainers.com/guides/getting-started-with-testcontainers-for-nodejs/ |
-| **@fastify/helmet** | https://github.com/fastify/fastify-helmet |
-| **@fastify/cors** | https://github.com/fastify/fastify-cors |
-| **@fastify/cookie** | https://github.com/fastify/fastify-cookie |
-| **@fastify/csrf-protection** | https://github.com/fastify/csrf-protection |
-| **NestJS Rate Limiting** | https://docs.nestjs.com/security/rate-limiting |
-| **NestJS Auth** | https://docs.nestjs.com/security/authentication |
-| **NestJS Authorisation** | https://docs.nestjs.com/security/authorization |
-| **NestJS Config** | https://docs.nestjs.com/techniques/configuration |
-| **NestJS Health** | https://docs.nestjs.com/recipes/terminus |
-| **NestJS Events** | https://docs.nestjs.com/techniques/events |
-| **NestJS Testing** | https://docs.nestjs.com/fundamentals/testing |
-| **EventEmitter2** | https://github.com/EventEmitter2/EventEmitter2 |
+| Topic                             | URL                                                                                         |
+| --------------------------------- | ------------------------------------------------------------------------------------------- |
+| **NestJS v11 Docs**               | https://docs.nestjs.com/                                                                    |
+| **NestJS v11 Migration**          | https://docs.nestjs.com/migration-guide                                                     |
+| **Fastify v5 Docs**               | https://fastify.dev/docs/latest/                                                            |
+| **Fastify v5 Migration**          | https://fastify.dev/docs/latest/Guides/Migration-Guide-V5/                                  |
+| **Prisma Docs**                   | https://www.prisma.io/docs                                                                  |
+| **Prisma Client API**             | https://www.prisma.io/docs/orm/reference/prisma-client-reference                            |
+| **Prisma Migrate**                | https://www.prisma.io/docs/orm/prisma-migrate                                               |
+| **Zod Docs**                      | https://zod.dev/                                                                            |
+| **nestjs-zod v5**                 | https://github.com/BenLorantfy/nestjs-zod                                                   |
+| **BullMQ**                        | https://docs.bullmq.io/                                                                     |
+| **NestJS Queues**                 | https://docs.nestjs.com/techniques/queues                                                   |
+| **Paystack API**                  | https://paystack.com/docs/api/                                                              |
+| **Paystack Webhooks**             | https://paystack.com/docs/payments/webhooks/                                                |
+| **Cloudinary Node SDK**           | https://cloudinary.com/documentation/node_integration                                       |
+| **Cloudinary Upload API**         | https://cloudinary.com/documentation/image_upload_api_reference                             |
+| **Bunny.net Stream**              | https://docs.bunny.net/docs/stream-api-overview                                             |
+| **Resend Node SDK**               | https://resend.com/docs/send-with-nodejs                                                    |
+| **React Email**                   | https://react.email/docs/introduction                                                       |
+| **Sentry NestJS**                 | https://docs.sentry.io/platforms/javascript/guides/nestjs/                                  |
+| **ioredis**                       | https://github.com/redis/ioredis                                                            |
+| **Coolify**                       | https://coolify.io/docs                                                                     |
+| **Traefik**                       | https://doc.traefik.io/traefik/                                                             |
+| **PostgreSQL 18**                 | https://www.postgresql.org/docs/18/                                                         |
+| **Redis**                         | https://redis.io/docs/latest/                                                               |
+| **Puppeteer**                     | https://pptr.dev/                                                                           |
+| **Argon2 (Node)**                 | https://github.com/ranisalt/node-argon2                                                     |
+| **CUID2**                         | https://github.com/paralleldrive/cuid2                                                      |
+| **DOMPurify**                     | https://github.com/cure53/DOMPurify                                                         |
+| **Testcontainers**                | https://testcontainers.com/guides/getting-started-with-testcontainers-for-nodejs/           |
+| **@fastify/helmet**               | https://github.com/fastify/fastify-helmet                                                   |
+| **@fastify/cors**                 | https://github.com/fastify/fastify-cors                                                     |
+| **@fastify/cookie**               | https://github.com/fastify/fastify-cookie                                                   |
+| **@fastify/csrf-protection**      | https://github.com/fastify/csrf-protection                                                  |
+| **NestJS Rate Limiting**          | https://docs.nestjs.com/security/rate-limiting                                              |
+| **NestJS Auth**                   | https://docs.nestjs.com/security/authentication                                             |
+| **NestJS Authorisation**          | https://docs.nestjs.com/security/authorization                                              |
+| **NestJS Config**                 | https://docs.nestjs.com/techniques/configuration                                            |
+| **NestJS Health**                 | https://docs.nestjs.com/recipes/terminus                                                    |
+| **NestJS Events**                 | https://docs.nestjs.com/techniques/events                                                   |
+| **NestJS Testing**                | https://docs.nestjs.com/fundamentals/testing                                                |
+| **EventEmitter2**                 | https://github.com/EventEmitter2/EventEmitter2                                              |
 | **Node.js Docker Best Practices** | https://snyk.io/blog/10-best-practices-to-containerize-nodejs-web-applications-with-docker/ |
-| **Choosing Node.js Docker Image** | https://snyk.io/blog/choosing-the-best-node-js-docker-image/ |
+| **Choosing Node.js Docker Image** | https://snyk.io/blog/choosing-the-best-node-js-docker-image/                                |
 
 ---
 

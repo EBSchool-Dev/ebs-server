@@ -1,8 +1,8 @@
 import { Test, type TestingModule } from "@nestjs/testing";
 
+import { PrismaService } from "./database/prisma.service";
 import { HealthController } from "./modules/health/health.controller";
 import { HealthService } from "./modules/health/health.service";
-import { PrismaService } from "./prisma/prisma.service";
 
 describe("AppController", () => {
   let healthController: HealthController;

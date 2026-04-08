@@ -97,22 +97,44 @@ npx prisma generate
 
 ## Docker
 
+Shorter invocations (from repo root):
+
+```bash
+make help          # list targets
+make dev-up        # dev stack, foreground, rebuild
+make dev-bg        # dev stack, detached
+make dev-down      # stop dev stack
+make dev-down-v    # stop dev + drop volumes (fresh DB / node_modules in container)
+make dev-fresh     # dev-down-v then dev-up (after adding devDependencies like nodemon)
+make prod-up       # prod-like stack, foreground, rebuild
+```
+
+The dev API service uses an anonymous `node_modules` volume so Linux binaries match the container. If you see `nodemon: not found`, run `make dev-fresh` once, or restart: the compose command runs `npm ci` automatically when `node_modules/.bin/nodemon` is missing.
+
+Equivalent raw commands:
+
 ```bash
 # validate development compose file
-docker compose -f docker/docker-compose.dev.yml config
+docker compose --env-file .env -f docker/docker-compose.dev.yml config
 
-# start local development stack (uses Dockerfile.dev + watch mode)
-docker compose -f docker/docker-compose.dev.yml up --build
+# start local development stack (uses Dockerfile.dev + nodemon restarts)
+docker compose --env-file .env -f docker/docker-compose.dev.yml up --build
 
 # start production-like stack (uses Dockerfile)
-docker compose -f docker/docker-compose.prod.yml up --build
+docker compose --env-file .env -f docker/docker-compose.prod.yml up --build
 ```
 
 To run on another port (example `4001`):
 
 ```bash
-APP_PORT=4001 docker compose -f docker/docker-compose.dev.yml up --build
+APP_PORT=4001 make dev-up
+# or
+APP_PORT=4001 docker compose --env-file .env -f docker/docker-compose.dev.yml up --build
 ```
+
+The dev stack runs `npm run start:dev:docker` (nodemon + `nest start` per change) instead of `nest start --watch`, so the previous Node process is stopped before the next one binds the port. That avoids `EADDRINUSE` inside the container when editing files over a bind mount.
+
+On the host, use `npm run start:dev` (Nest’s built-in watch) as usual.
 
 ## VS Code / Cursor Save Behavior
 

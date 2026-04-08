@@ -5,9 +5,12 @@ services:
     build:
       context: ..
       dockerfile: docker/Dockerfile.dev
+    init: true
     restart: unless-stopped
     environment:
       - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+      - CHOKIDAR_INTERVAL=1000
       - PORT=${APP_PORT:-3000}
       - DATABASE_URL=postgresql://ebsn:${POSTGRES_PASSWORD}@postgres:5432/ebsn
       - DATABASE_READ_URL=postgresql://ebsn:${POSTGRES_PASSWORD}@postgres:5432/ebsn
@@ -17,7 +20,16 @@ services:
     volumes:
       - ../:/app
       - /app/node_modules
-    command: npm run start:dev
+    command:
+      - sh
+      - -c
+      - |
+        set -e
+        if [ ! -x node_modules/.bin/nodemon ]; then
+          echo "node_modules volume missing dev deps (e.g. nodemon); running npm ci..."
+          npm ci
+        fi
+        exec npm run start:dev:docker
     depends_on:
       postgres:
         condition: service_healthy

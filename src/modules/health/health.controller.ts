@@ -1,6 +1,6 @@
 import { Controller, Get } from "@nestjs/common";
 
-import { Public } from "../../common/decorators/public.decorator";
+import { Public } from "@/common/decorators";
 
 import { type HealthResponse, HealthService, type ReadinessResponse } from "./health.service";
 
